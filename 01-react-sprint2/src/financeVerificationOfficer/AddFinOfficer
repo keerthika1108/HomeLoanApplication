@@ -1,0 +1,93 @@
+import React from "react";
+import FinanceVerification from "../model/FinanceVerification";
+
+import FinanceVerificationService from "../service/FinanceVerificationService";
+
+
+function AddFinOfficier(){
+    let service = new FinanceVerificationService();
+    const [state,changeState]= React.useState({FinOff: new FinanceVerification()});
+    const [error, setError]= React.useState({
+        nameError:'',
+        numError:'',
+        idError: '',
+        passError: '',
+        roleError: ''
+    });
+    return(
+        <div>
+            <form>
+                <h2><span>Add FinanceVerification Officier</span></h2>
+                <table>
+                
+                    
+                    <div className="text-danger">{error.nameError}</div>
+                    <tr>
+                        <td>Officier Name</td>
+                        <td><input type="text" id="name" name="name" placeholder="Enter Name"
+                        value={state.FinOff.finOfficerName} onChange={(e)=> changeState({FinOff:{...state.FinOff, finOfficerName: e.target.value}})}
+                        /></td>
+                    </tr>
+                    <div className="text-danger">{error.numError}</div>
+                    <tr>
+                        <td>Officier Contact</td>
+                        <td><input type="text" id="number" name="number" placeholder="Enter contact number"
+                        value={state.FinOff.finOfficerContact} onChange={(e)=> changeState({FinOff:{...state.FinOff,finOfficerContact: e.target.value}})}
+                        /></td>
+                    </tr>
+                    <div className="text-danger">{error.passError}</div>
+                    <tr>
+                        <td>Password</td>
+                        <td><input type="password" id="password" name="password" placeholder="Enter password"
+                        value={state.FinOff.password} onChange={(e)=> changeState({FinOff:{...state.FinOff, password: e.target.value}})}
+                        /></td>
+                    </tr>
+                    <div className="text-danger">{error.roleError}</div>
+                    <tr>
+                        <td>Role</td>
+                        <td><input type="text" id="role" name="role" placeholder="Enter role"
+                        value={state.FinOff.role} onChange={(e)=> changeState({FinOff:{...state.FinOff, role: e.target.value}})}
+                        /></td>
+                    </tr>
+                    <tr>
+                        <td><button className="btn btn-info" onClick={(event)=>{
+                            event.preventDefault();
+                            let err = {};
+                            let isError = false;
+                           
+                            if(!state.FinOff.finOfficerName){
+                                err.nameError ="Name is required !";
+                                isError = true;
+                            }
+                            if(!state.FinOff.finOfficerContact){
+                                err.numError ="Contact Number is required !";
+                                isError = true;
+                            }
+                            if(!state.FinOff.password){
+                                err.passError ="password is required !";
+                                isError = true;
+                            }
+                            if(!state.FinOff.role){
+                                err.roleError ="Role is required !";
+                                isError = true;
+                            }
+                            if(!isError){                                
+                                service.addFinOff(state.FinOff).then(()=>{
+                                    alert("Finance Offcier added Successfully...");
+                                }).catch(()=>{
+                                    alert("Error is occurred.");
+                                })                             
+                            }else{
+                                setError(err);
+                            } 
+                                                 
+
+                        }}>add Offcier</button></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    )
+
+}
+export default AddFinOfficier;
