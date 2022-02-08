@@ -1,0 +1,179 @@
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import Customer from "../model/Customer";
+import CustomerService from "../service/CustomerService";
+
+function AddCustomer() {
+    const service = new CustomerService();
+    const navigate = useNavigate();
+    const [state, changeState] = React.useState({ customer: new Customer() });
+    const[error, setError] = React.useState({
+       nameError:'',
+       numberError:'',
+       emailError:'',
+       dobError:'',
+       genderError:'',
+       nationalityError:'',
+       aadharNumberError:'',
+       panNumberError:'',
+       roleError:'',
+       passwordError:''
+       
+
+    })
+    return (
+        <div className="my-4">
+            <form>
+                <h2><span className='badge badge-dark px-4 py-2'></span></h2>
+                <div className='form-group'>
+                    <label>Customer Name</label>
+                    <input  className="form-control" type="text" id="customerName" name="customerName" placeholder="Enter Customer name"
+                        value={state.customer.customerName}
+                        onChange={(event) => changeState({ customer: { ...state.customer, customerName: event.target.value } })}
+                    /><div className="text-danger">{error.nameError}</div>
+                </div>
+                <div className='form-group'>
+                    <label>Mobile Number</label>
+                    <input className="form-control" type="text" id="mobileNumber" name="mobileNumber" placeholder="Enter Mobile Number"
+                        value={state.customer.mobileNumber}
+                        onChange={(event) => changeState({ customer: { ...state.customer, mobileNumber: event.target.value } })}
+                    /><div className="text-danger">{error.numberError}</div>
+                </div>
+                <div className='form-group'>
+                    <label>Email Id</label>
+                    <input className="form-control" type="text" id="emailId" name="emailId" placeholder="Enter emailId"
+                        value={state.customer.emailId}
+                        onChange={(event) => changeState({ customer: { ...state.customer, emailId: event.target.value } })}
+                    /><div className="text-danger">{error.emailError}</div>
+                </div>
+                <div className='form-group'>
+                    <label>Date of Birth</label>
+                    <input className="form-control" type="date" id="dateOfBirth" name="dateOfbirth" placeholder="Enter Customer DOB"
+                        value={state.customer.dateOfBirth}
+                        onChange={(event) => changeState({ customer: { ...state.customer, dateOfBirth: event.target.value } })}
+                    /><div className="text-danger">{error.dobError}</div>
+                </div>
+                <div className='form-group'>
+                    <label>Gender</label>
+                    <div value={state.customer.gender} onChange={(event) => changeState({ customer: { ...state.customer, gender: event.target.value } })}>
+                        <input type="radio" name="gender" id="gender1" value="Female" /> FEMALE
+                        <input type="radio" name="gender" id="gender2" value="Male" /> MALE
+                        <input type="radio" name="gender" id="gender3" value="Others" /> OTHERS
+                    </div><div className="text-danger">{error.genderError}</div>
+                </div>
+                <div className='form-group'>
+                    <label>Nationality</label>
+                    <input className="form-control" type="text" id="nationality" name="nationality" placeholder="Enter Nationality"
+
+                        value={state.customer.nationality}
+                        onChange={(event) => changeState({ customer: { ...state.customer, nationality: event.target.value } })}
+                    /><div className="text-danger">{error.nationalityError}</div>
+                </div>
+                <div className='form-group'>
+                    <label>Aadhar Number</label>
+                    <input className="form-control" type="text" id="aadharNumber" name="aadharNumber" placeholder="Enter Aadhar Number"
+
+                        value={state.customer.aadharNumber}
+                        onChange={(event) => changeState({ customer: { ...state.customer, aadharNumber: event.target.value } })}
+                    /><div className="text-danger">{error.aadharNumberError}</div>
+                </div>
+                <div className='form-group'>
+                    <label>Pan Number</label>
+                    <input className="form-control" type="text" id="panNumber" name="panNumber" placeholder="Enter PanNumber"
+
+                        value={state.customer.panNumber}
+                        onChange={(event) => changeState({ customer: { ...state.customer, panNumber: event.target.value } })}
+                    /><div className="text-danger">{error.panNumberError}</div>
+                </div>
+                <div className='form-group'>
+                    <label>Role</label>
+                    <div value={state.customer.role} onChange={(event) => changeState({ customer: { ...state.customer, role: event.target.value } })}>
+                        <select id="location">
+                            <option></option>
+                            <option>Customer</option>
+                        </select>
+                    </div><div className="text-danger">{error.roleError}</div>
+                </div>
+
+                <div className='form-group'>
+                    <label>Enter Password</label>
+                    <input className="form-control" type="password" id="password" name="password" placeholder="Enter Password"
+
+                        value={state.customer.password}
+                        onChange={(event) => changeState({ customer: { ...state.customer, password: event.target.value } })}
+                    /><div className="text-danger">{error.passwordError}</div>
+                </div>
+
+
+                <button className="btn btn-primary" onClick={(event) => {
+                    event.preventDefault();
+                    let err={};
+                    let isError = false;
+                    if (!state.customer.customerName) {
+                        err.nameError="Name is Required!";
+                        isError=true;
+                        
+                    }
+                    if (!state.customer.mobileNumber) {
+                        err.numberError="Mobile Number isRequired!";
+                        isError=true;
+                        
+                    }
+                    if (!state.customer.emailId) {
+                        err.emailError=" Email is Required!";
+                        isError=true;
+                        
+                    }
+                    if (!state.customer.dateOfBirth) {
+                        err.dobError=" Date of Birth is Required!";
+                        isError=true;
+                        
+                    }
+                    if (!state.customer.gender) {
+                        err.genderError="Gender is Required!";
+                        isError=true;
+                        
+                    }
+                    if (!state.customer.nationality) {
+                        err.nationalityError="Nationality is Required!";
+                        isError=true;
+                        
+                    }
+                    if (!state.customer.aadharNumber) {
+                        err.aadharNumberError="AadharNumber is Required!";
+                        isError=true;
+                        
+                    }
+                    if (!state.customer.panNumber) {
+                        err.panNumberError="PanNumber is Required!";
+                        isError=true;
+                        
+                    }
+                    if (!state.customer.role) {
+                        err.roleError="Select any!";
+                        isError=true;
+                        
+                    }
+                    if (!state.customer.password) {
+                        err.passwordError="Password is Required!";
+                        isError=true;
+                        
+                    }
+                    if (!isError) {
+                        service.addCustomer(state.customer).then(() => {
+                            alert("Customer is added");
+                             navigate('/customer/one')
+                         }).catch(() => {
+                             alert("Customer is not added.")
+                         })
+                        }else{
+                            setError(err)
+                        }
+                    
+                }}>Add customer</button>
+            </form>
+        </div>
+    );
+}
+
+export default AddCustomer;
