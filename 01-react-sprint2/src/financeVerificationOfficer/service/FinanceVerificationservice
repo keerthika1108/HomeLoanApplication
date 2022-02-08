@@ -1,0 +1,9 @@
+import axios from "axios";
+class FinanceVerificationService{
+    addFinOff(officier) {
+        return axios.post('http://localhost:4898/api/adduserasfinanceofficer',officier);
+    }
+    
+
+}
+export default FinanceVerificationService;
