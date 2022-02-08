@@ -1,0 +1,15 @@
+import User from "../../user/model/User";
+
+class Customer extends User {
+    customerName='';
+    mobileNumber='';
+    emailId='';
+    dateOfBirth='';
+    gender='';
+    nationality='';
+    aadharNumber='';
+    panNumber='';
+    user = new User();
+}
+
+export default Customer;
