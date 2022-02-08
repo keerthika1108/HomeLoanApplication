@@ -1,0 +1,23 @@
+import axios from 'axios';
+
+class CustomerService {
+    addCustomer(customer) {
+       // alert(JSON.stringify(customer));
+        return axios.post('http://localhost:4898/api/addCustomer/', customer);
+    }
+    viewCustomer(){
+        return axios.get(`http://localhost:4898/api/viewCustomer/`);
+    }
+    viewCustomerById(userId){
+        return axios.get(`http://localhost:4898/api/ViewCustomer/${userId}`);
+    }
+    updateCustomer(customer){
+        return axios.put(`http://localhost:4898/api/updateCustomer/`, customer);
+    }
+    
+    deleteCustomer(userId){
+        return axios.delete(`http://localhost:4898/api/deleteCustomer/${userId}`);
+    }
+
+}
+export default CustomerService;
